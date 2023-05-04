@@ -1,0 +1,83 @@
+﻿<!-- Copyright (c) Microsoft Corporation.
+Licensed under the MIT license. -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Power BI Embedded sample</title>
+    <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/index.css">
+</head>
+
+<body>
+    <header class="embed-container col-lg-12 col-md-12 col-sm-12 shadow">
+        <span class="font-weight-bold" style="font-size:25px">
+            Power BI Embedded Sample
+       </span>
+        <input type="button" class="btn btn-danger" value="Export" onclick="GetPDF()"/>
+        <span id="Loading" style="display:none"> Loading ...</span>
+    </header>
+    <main class="row">
+        @*<section id="text-container" class="embed-container col-lg-4 col-md-4 col-sm-4 mb-5 ml-5 mt-5">
+            <div>
+                <p>This sample is developed using .NET Core.
+                    <br>
+                    In order to see a different report, make changes to the <i>appsettings.json</i> file.
+                </p>
+                <p>Code is present in the following files:
+                    <ol>
+                        <li>ConfigurationModel.cs</li>
+                        <li>EmbedInfoController.cs</li>
+                        <li>AadService.cs</li>
+                        <li>PbiEmbedService.cs</li>
+                        <li>ConfigValidatorService.cs</li>
+                        <li>Index.cshtml.cs</li>
+                        <li>index.js</li>
+                        <li>index.css</li>
+                    </ol>
+                </p>
+            </div>
+        </section>*@
+        <section id="report-container" class="embed-container col-sm-12">
+        </section>
+
+        <!-- Used to display report embed error messages -->
+        <section class="error-container m-5">
+        </section>
+        <a id="pdf"target="_blank"></a>
+    </main>
+    
+    <script src="lib/jquery/dist/jquery.min.js"></script>
+    <script src="lib/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="lib/powerbi-client/dist/powerbi.min.js"></script>
+    <script src="js/index.js"></script>
+    <script>
+      
+    </script>
+    <script>
+       
+
+        function GetPDF() {
+            $('#Loading').show();
+            $.post("/EmbedInfo/GetPDF", {}, function (res) {
+             
+                var data = res.split('$');
+                if (data[0] == "Succeeded") {
+                    $('#Loading').hide();
+                    alert("PDF Downloaded Successfully! path = " + data[1]);
+
+                }
+                else {
+                    $('#Loading').hide();
+                    alert(data[0]+data[1]);
+                }
+
+            })
+        }
+    </script>
+</body>
+</html>
